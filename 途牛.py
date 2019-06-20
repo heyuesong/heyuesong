@@ -21,7 +21,6 @@ class Douban(object):
         
         self.parsePage(html)
     def parsePage(self,html):
-        #把json格式的响应内容转为Python数据类型
         parseHtml = etree.HTML(html)
         title = parseHtml.xpath('//p[@class="title"]/span/@name')            
         money = parseHtml.xpath('//ul/li/div/a/div/div/em/text()')        
@@ -34,12 +33,10 @@ class Douban(object):
         self.writeMysql(title,money,manyidu,people)
     def writeMysql(self,title,money,manyidu,people):
         with open('途牛2.csv','a',newline='') as f:
-            writer = csv.writer(f)
-#            writer.writerow(['云南'])
+            writer = csv.writer(f)         
             for r in range(0,len(title)):
                 
-                info=[title[r],money[r]+'起',manyidu[r]+'%',people[r]]
-#                print(info)
+                info=[title[r],money[r]+'起',manyidu[r]+'%',people[r]]               
                 writer.writerow(info)
     def main(self):
 #        s = ['%E5%9B%9B%E5%B7%9D','%E4%B8%89%E4%BA%9A','%E4%BA%91%E5%8D%97','%E6%B5%99%E6%B1%9F','%E5%B9%BF%E4%B8%9C']
@@ -59,11 +56,8 @@ class Douban(object):
                         'Referer': url,
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.90 Safari/537.36',
                         'X-Requested-With': 'XMLHttpRequest',
-                        }
-                
-                
+                        }        
                 self.getPage(url,params)
-
 if __name__=='__main__':
     start = time.time()
     douban = Douban()
